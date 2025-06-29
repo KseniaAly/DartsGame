@@ -30,21 +30,24 @@ export default {
     isFinishable(x) {
       return (x === 50) || (x <= 40 && x % 2 === 0)
     },
-    hit(n,m) {
-      let pts = n*m
+    hit(n, m) {
+      let pts = n * m
       let before = this.score[this.cur]
       let after = before - pts
+
       if (after < 0 || after === 1) return this.nextDart()
+
       if (after === 0) {
         if (!(m === 2 || (n === 25 && m === 2))) return this.nextDart()
+        this.score.splice(this.cur, 1, 0)
         return this.end()
       }
-      if (this.darts === 0 && !this.isFinishable(after) && (pts % 2 === 0)) {
-        return this.nextDart()
-      }
-      this.score.splice(this.cur,1,after)
+
+      this.score.splice(this.cur, 1, after)
       this.nextDart()
-    },
+    }
+    ,
+
     noPoint() {
       this.nextDart()
     },
@@ -115,6 +118,7 @@ export default {
         </div>
       </div>
       <div class="round">Раунд {{ round }}</div>
+      <div class="throw">Бросок {{ darts + 1 }} из 3</div>
       <table class="tab">
         <thead>
         <tr><th></th><th v-for="n in nums" :key="n">{{ n }}</th></tr>
