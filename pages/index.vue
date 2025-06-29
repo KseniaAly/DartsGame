@@ -1,5 +1,5 @@
 <script setup>
-import Darts from "./components/Darts.vue";
+import Darts from "/components/Darts.vue";
 </script>
 
 <template>
