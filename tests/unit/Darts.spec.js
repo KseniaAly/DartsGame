@@ -28,7 +28,7 @@ describe('Компонент Darts', () => {
         expect(wrapper.vm.showWelcome).to.be.false
     })
 
-    it('startGame считывает имена, добавляет счёт и переходит в фазу игры', () => {
+    it('startGame считывает имена игроков, добавляет счёт и переходит в фазу игры', () => {
         wrapper.setData({ numPlayers: 3, names: ['A','B','C'] })
         wrapper.vm.startGame()
         expect(wrapper.vm.phase).to.equal('game')
@@ -41,7 +41,7 @@ describe('Компонент Darts', () => {
         expect(wrapper.vm.score[0]).to.equal(481)
     })
 
-    it('при bust счёт не меняется, но увеличивается счётчик дротиков', () => {
+    it('при bust счёт игрока не меняется, но увеличивается счётчик бросков', () => {
         wrapper.setData({ phase: 'game', score: [10], numPlayers: 1, darts: 0 })
         wrapper.vm.hit(6, 2)
         expect(wrapper.vm.score[0]).to.equal(10)
@@ -55,12 +55,10 @@ describe('Компонент Darts', () => {
         expect(wrapper.vm.score[0]).to.equal(501)
     })
 
-    it('для финиша на 0 требуется double-out или булл50', () => {
+    it('для финиша на 0 последним броском должен быть double-out или булл50', () => {
         wrapper.setData({ phase: 'game', score: [4], numPlayers: 1, darts: 0 })
-        // single 2 оставляет 2, но single нельзя финишировать
         wrapper.vm.hit(2,1)
         expect(wrapper.vm.phase).to.equal('game')
-        // double 1 финиширует
         wrapper.vm.hit(1,2)
         expect(wrapper.vm.phase).to.equal('res')
     })
@@ -72,9 +70,15 @@ describe('Компонент Darts', () => {
         expect(wrapper.vm.round).to.equal(2)
     })
 
-    it('заканчивает игру ничьей после >20 раундов без победителя', () => {
-        wrapper.setData({ phase: 'game', score: [100,100], numPlayers: 2, round: 21, darts: 2 })
+    it('заканчивает игру после 20 раундов с выявлением победителя по количеству очков', () => {
+        wrapper.setData({phase: 'game', numPlayers: 2, names: ['Игрок1', 'Игрок2'], score: [80, 100],
+            cur: 1, darts: 2, round: 20})
         wrapper.vm.nextDart()
         expect(wrapper.vm.phase).to.equal('res')
+        const sorted = wrapper.vm.sorted
+        expect(sorted[0].score).to.equal(80)
+        expect(sorted[0].name).to.equal('Игрок1')
     })
+
+
 })
