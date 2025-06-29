@@ -179,9 +179,9 @@ export default {
 .sel button, input {
   margin: 5px;
   padding: 10px 15px;
-  border: none;
+  border: 2px solid #F87036;
   border-radius: 10px;
-  background: #444;
+  background: none;
   color: #fff;
   font-size: 1.1rem;
 }
@@ -205,6 +205,11 @@ button:hover, .nopoint:hover, .selbtn:hover {
 }
 .names input {
   width: 150px;
+}
+.names input:focus {
+  background: #F87036;
+  color: white;
+  border: none;
 }
 .player {
   margin: 8px;
