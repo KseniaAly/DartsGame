@@ -1,5 +1,9 @@
 <script>
+import RulesModal from "~/components/mp/RulesModal.vue";
 export default {
+  components: {
+    RulesModal
+  },
   data() {
     return {
       showWelcome: true,
@@ -16,6 +20,7 @@ export default {
         { name:'tri', label:'Утроение', mul:3 },
         { name:'dub', label:'Удвоение', mul:2 },
       ],
+      showRules: false
     }
   },
   mounted() {
@@ -45,9 +50,7 @@ export default {
 
       this.score.splice(this.cur, 1, after)
       this.nextDart()
-    }
-    ,
-
+    },
     noPoint() {
       this.nextDart()
     },
@@ -89,12 +92,14 @@ export default {
 <template>
   <div id="app">
     <img class="dartsImg" src="/img/darts.png" alt="">
+    <RulesModal :isOpen="showRules" @close="showRules = false" />
+
     <div v-if="showWelcome" class="overlay">
       <h1>Добро пожаловать в игру 501</h1>
     </div>
 
     <div v-else-if="phase === 'config'" class="main-center">
-      <button class="prav">Правила игры</button>
+      <button class="prav" @click="showRules = true">Правила игры</button>
       <div class="sel">
         <span>Игроков: </span>
         <button v-for="n in [2,3,4,5]" :key="n" @click="numPlayers = n" :class="{ selbtn: numPlayers === n }">
@@ -111,7 +116,7 @@ export default {
     </div>
 
     <div v-else-if="phase === 'game'" class="main-center">
-      <button class="prav">Правила игры</button>
+      <button class="prav" @click="showRules = true">Правила игры</button>
       <div class="players">
         <div v-for="(p, i) in names" :key="i" :class="['player', { active: cur === i }]">
           <span>{{ p }}</span> <span>{{ score[i] }}</span>
@@ -138,12 +143,12 @@ export default {
     </div>
 
     <div v-else class="overlay">
-      <button class="prav">Правила игры</button>
-      <h2>Итоги</h2>
+      <button class="prav" @click="showRules = true">Правила игры</button>
+      <h2>Итоги:</h2>
       <ol>
         <li v-for="(p,i) in sorted" :key="i">{{ p.name }} — {{ p.score }}</li>
       </ol>
-      <button @click="reset">Новая игра</button>
+      <button class="ok" @click="reset">Начать заново</button>
     </div>
   </div>
 </template>
@@ -199,6 +204,26 @@ export default {
   transition: 0.2s;
   cursor: pointer;
 }
+
+.ok{
+  margin: 8px;
+  padding: 8px 12px;
+  border: 3px solid white;
+  border-radius: 8px;
+  background: none;
+  font-size: 1rem;
+  color: white;
+  transition: 0.2s;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.overlay{
+  border: 3px solid white;
+  border-radius: 20px;
+  padding: 30px;
+}
+
 button:hover, .nopoint:hover, .selbtn:hover {
   background: #F87036;
   transition: 0.2s;
@@ -261,9 +286,11 @@ table{
 .prav{
   position: fixed;
   top: 10px;
+  font-size: 1rem;
   right: 10px;
   background: #F87036;
   border: none;
+  font-family: 'Press Start 2P', cursive;
 }
 .prav:hover{
   background: #9e4722;
