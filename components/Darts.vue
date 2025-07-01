@@ -155,7 +155,9 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+*{
+  font-family: 'Press Start 2P', cursive;
+}
 #app {
   font-family: 'Press Start 2P', cursive;
   background: #24292D;
@@ -263,9 +265,11 @@ button:hover, .nopoint:hover, .selbtn:hover {
 }
 .bull{
   margin-top: 20px;
+
 }
 .bull button {
   margin:5px;
+  font-family: 'Press Start 2P', cursive;
 }
 th{
   color: #F87036;
