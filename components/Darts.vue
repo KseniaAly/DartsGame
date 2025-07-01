@@ -279,8 +279,8 @@ li{
 }
 .dartsImg{
   position: fixed;
-  bottom: 10px;
-  left: 10px;
+  bottom: 0;
+  left: 0;
   height: 50%;
 }
 table{
