@@ -14,7 +14,6 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@nuxt/test-utils-edge": "^3.8.0-28284309.b3d3d7f4",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitest/ui": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
